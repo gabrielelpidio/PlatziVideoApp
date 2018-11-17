@@ -21,7 +21,6 @@ export default class App extends Component<Props> {
         <Text>Search</Text>
         <Text>Categories</Text>
         <SuggestionList/>
-        <Text>Sugerencias</Text>
       </Home>
     );
   }
