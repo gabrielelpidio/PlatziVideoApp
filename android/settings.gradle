@@ -1,0 +1,3 @@
+rootProject.name = 'PlatziVideoApp'
+
+include ':app'
