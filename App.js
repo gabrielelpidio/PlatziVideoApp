@@ -11,18 +11,45 @@ import {Platform, StyleSheet, Text, View} from 'react-native';
 import Home from './src/screens/containers/home'
 import Header from './src/sections/components/header'
 import SuggestionList from './src/videos/containers/suggestions-list'
+import Api from './src/utils/api';
+import CategoryList from './src/videos/containers/category-list';
 
 type Props = {};
+
 export default class App extends Component<Props> {
+  state = {
+    suggestionList: [],
+    categoryList: [],
+    loading: true
+  }
+  async componentDidMount() {
+    const movies = await Api.getSuggestion(10);
+    const categories = await Api.getMovies(10);
+    console.log(movies);
+    console.log(categories);
+    this.setState({
+      loading: false,
+      suggestionList: movies,
+      categoryList: categories,
+    })
+  }
   render() {
     return (
       <Home>
         <Header/>
         <Text>Search</Text>
         <Text>Categories</Text>
-        <SuggestionList/>
+        <CategoryList
+          list={this.state.categoryList}
+          loading={this.state.loading}
+        />
+        <SuggestionList
+          list={this.state.suggestionList}
+          loading={this.state.loading}
+        />
       </Home>
     );
   }
 }
+
 
