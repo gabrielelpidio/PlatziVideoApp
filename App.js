@@ -6,21 +6,24 @@
  * @flow
  */
 
-import React, {Component} from 'react';
-import {Platform, StyleSheet, Text, View} from 'react-native';
+import React, { Component } from 'react';
+import { Platform, StyleSheet, Text, View } from 'react-native';
 import Home from './src/screens/containers/home'
 import Header from './src/sections/components/header'
 import SuggestionList from './src/videos/containers/suggestions-list'
 import Api from './src/utils/api';
 import CategoryList from './src/videos/containers/category-list';
-
+import Player from './src/player/containers/player'
+import Modal from './src/player/components/modal';
 type Props = {};
+
 
 export default class App extends Component<Props> {
   state = {
     suggestionList: [],
     categoryList: [],
-    loading: true
+    loading: true,
+    isFullscreen: false,
   }
   async componentDidMount() {
     const movies = await Api.getSuggestion(10);
@@ -33,10 +36,14 @@ export default class App extends Component<Props> {
       categoryList: categories,
     })
   }
+
+  
+
   render() {
     return (
       <Home>
-        <Header/>
+        <Player/>
+        <Header />
         <Text>Search</Text>
         <Text>Categories</Text>
         <CategoryList
