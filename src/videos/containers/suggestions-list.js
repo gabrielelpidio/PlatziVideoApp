@@ -8,7 +8,15 @@ import Empty from '../components/empty';
 import VerticalSeparator from '../components/vertical-separator';
 import Suggestion from '../components/suggestion';
 import Loader from '../../loader/loader';
+import { connect } from 'react-redux'
 
+function mapStateToProps(state) {
+  // debugger
+  return {
+    loading: state.isSuggestionLoading,
+    list: state.suggestionList
+  }
+}
 class SuggestionList extends Component {
   keyExtractor = item => item.id.toString()
   renderEmpty = () => <Empty text="No se encontraron sugerencias :("/>
@@ -42,4 +50,4 @@ class SuggestionList extends Component {
   }
 }
 
-export default SuggestionList
+export default connect(mapStateToProps)(SuggestionList)
