@@ -5,15 +5,19 @@ import Header from '../../sections/components/header';
 import Close from '../../sections/components/close';
 import { connect } from 'react-redux'
 import Details from '../../videos/components/details';
-
+import { Animated } from 'react-native';
 
 const mapStateToProps = (state) => {
   return {
-    movie: state.selectedMovie
+    movie: state.selectedMovie,
+    loading: state.isSelectedMovieLoading
   }
 }
 
 export class Movie extends Component {
+  state={
+    opacity: new Animated.Value(0)
+  }
   closeVideo = () => {
     this.props.dispatch({
       type: 'SET_SELECTED_MOVIE',
@@ -22,17 +26,33 @@ export class Movie extends Component {
       }
     })
   }
+  componentDidMount(){
+    Animated.timing(
+      this.state.opacity,
+      {
+        toValue: 1,
+        duration: 1000,
+      }
+    ).start()
+  }
   render() {
     return (
-      <MovieLayout>
-        <Header>
-          <Close
-            onPress={this.closeVideo}
-          />
-        </Header>
-        <Player />
-        <Details {...this.props.movie}/>
-      </MovieLayout>
+      <Animated.View
+        style={{
+          flex: 1,
+          opacity: this.state.opacity,
+        }}
+      >
+        <MovieLayout>
+          <Header>
+            <Close
+              onPress={this.closeVideo}
+            />
+          </Header>
+          <Player />
+          <Details {...this.props.movie} loading={this.props.loading}/>
+        </MovieLayout>
+      </Animated.View>
     )
   }
 }

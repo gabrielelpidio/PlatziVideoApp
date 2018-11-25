@@ -1,11 +1,19 @@
 import React from 'react'
 import { View, Text, StyleSheet, Image, WebView, ScrollView} from 'react-native';
 import { makeHTML   } from '../../utils/trailer-youtube';
+import Loader from '../../loader/loader';
 
 /* <iframe width="560" height="315" src="https://www.youtube.com/embed/QwievZ1Tx-8" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe> */
 
 const Details = (props) => {
   return (
+    props.loading ?
+    <Loader size="large" style={{
+      flex: 1,
+      alignItems: 'center',
+      justifyContent: 'center'
+    }}/>
+    :
     <ScrollView>
       <View style={styles.top}>
         <Text>{props.title}</Text>
@@ -16,7 +24,7 @@ const Details = (props) => {
             style={styles.cover}
             source={{ uri: props.medium_cover_image }}
           />
-          <Text styles={styles.description}>{props.description_full}</Text>
+          <Text style={styles.description}>{props.description_full}</Text>
         </View>
       </View>
       <View style={styles.trailer}>
@@ -25,8 +33,7 @@ const Details = (props) => {
         />
       </View>
     </ScrollView>
-
-  );
+    );
 }
 
 const styles = StyleSheet.create({
@@ -64,7 +71,9 @@ const styles = StyleSheet.create({
     color: "#4c4c4c",
     marginLeft: 10,
     flex: 1
-  }
+  },
 })
+
+
 
 export default Details;
